@@ -1,0 +1,222 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+int main(int argc, char const* argv[])
+{
+	vector <int> v1;
+
+	for (int i = 1; i <= 3; i++)// size 실제 저장된 요소 개수 capacity 확보된 메모리 공간의 갯수
+	{
+		v1.push_back(i * 10);
+		cout << "push_back(" << i * 10 << ") -> "
+		<< "size: " << v1.size()
+		<< ", capacity: " << v1.capacity() << endl;
+	}
+}
+
+#include <vector>
+#include <iostream>
+using namespace std;
+int main()
+{
+	vector<int> v1, v2, v3;
+
+	v1.push_back(10);
+	v1.push_back(20);
+	v1.push_back(30);
+	v1.push_back(40);
+	v1.push_back(50);
+
+	cout << "v1 = ";
+	for (auto& v : v1) {
+		cout << v << " ";
+	}
+	cout << endl;
+
+	v2.assign(v1.begin(), v1.end());
+	cout << "v2 = ";
+	for (auto& v : v2) {
+		cout << v << " ";
+	}
+	cout << endl;
+
+	v3.assign(3, 6);//assign은 같은 컨테이너의 내용을 통째로 다른 값들로  갈아끼우는 함수(요소의 개수, 채울값)
+	cout << "v3 = ";
+	for (auto& v : v3) {
+		cout << v << " ";
+	}
+	cout << endl;
+
+	v3.assign({ 5, 6, 7 });
+	for (auto& v : v3) {
+		cout << v << " ";
+	}
+	cout << endl;
+
+	int& i = v1.at(0);
+
+	cout << "v1 첫 번째 원소의 값:  " << i << endl;
+
+	if (v1 == v2) cout << "v1과 v2는 같다." << endl;
+	else cout << "v1과 v2는 다르다" << endl;
+
+	i = 80;
+	const int& j = v1.at(0);
+
+{	cout << "값을 변경 후 v1 첫 번째 원소의 값:  " << j << endl;
+
+	if (v1 == v2) cout << "v1과 v2는 같다." << endl;
+	else cout << "v1과 v2는 다르다" << endl;
+}
+
+#include <iostream>
+#include <vector>
+using namespace std;
+
+class Rectangle {
+private:
+	int width;
+	int height;
+
+public:
+
+	Rectangle() : width(0), height(0){}
+
+	Rectangle(int w, int h) : width(w), height(h) {}
+
+	int area() const {
+		return width * height;
+	}
+
+	void print() const {
+		cout << "가로: " << width << "세로: " << height << "넓이: " << area() << endl;
+	}
+};
+
+int main()
+{
+	vector<Rectangle> rect;
+	int n;
+	cout << "사각형의 개수: ";
+	cin >> n;
+
+	for (int i = 0; i < n; i++) {
+		int w, h;
+		cout << "가로 세로 입력: ";
+		cin >> w >> h;
+		rect.push_back(Rectangle(w, h));
+	}
+
+}
+
+#include <vector>
+#include <iostream>
+using namespace std;
+int main()
+{
+	vector<int> v1(5);
+	v1.push_back(3);
+
+	cout << v1.capacity() << endl;//값을 예상할 했을 때 1 더 크다고 생각해서 맞았음.7
+	cout << v1.size() << endl;// push back으로 하나더 추가.6
+}
+//6번 문제 3 저장되는 위치 5번째 뒤 즉 6번째 위치라고 생각함.
+
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main()
+{
+	vector<int> v1 = { 10, 20, 30 };
+	vector<int> v2;
+
+	v2.assign(v1.begin(), v1.end());
+
+	cout << "[초기 상태]\n";
+	cout << "v1 크기(size): " << v1.size() << endl;
+	cout << "v2 크기(size): " << v2.size() << endl;
+
+	if (v1 == v2)
+		cout << "v1과 v2는 같다(==)\n";
+	else
+		cout << "v1과 v2는 다르다(!=)\n";
+
+	v2[0] = 99;
+
+	cout << "\n[v2 값 수정 후]\n";
+	cout << "v1[0]: " << v1[0] << endl;
+	cout << "v2[0]: " << v2[0] << endl;
+
+	if (v1 != v2)
+		cout << "수정 후: v1과 v2는 다르다(!=)\n";
+	else
+		cout << "수정 후: v1과 v2는 같다(==)\n";
+
+	return 0;
+}
+
+#include <iostream>
+#include <vector>
+#include <string>
+using namespace std;
+
+// 벡터 상태 출력 헬퍼 함수
+void print_vector(const vector<int>& v, const string& label)
+{
+	cout << "[" << label << "] ";
+	cout << "size = " << v.size()
+		<< ", capacity = " << v.capacity()
+		<< ", empty = " << boolalpha << v.empty() << "\n  요소: ";
+
+	for (int x : v)
+		cout << x << " ";
+	cout << "\n\n";
+}
+
+// vector 주요 멤버 함수 검증 함수
+void test_vector_members()
+{
+	cout << " vector 멤버 함수 검증 시작 \n";
+
+	vector<int> v; // 빈 벡터 생성
+	print_vector(v, "초기 상태");
+
+	// push_back()
+	v.push_back(10);
+	v.push_back(20);
+	v.push_back(30);
+	print_vector(v, "push_back 3회 후");
+
+	// at(), front(), back()
+	cout << "at(1) = " << v.at(1) << endl;
+	cout << "front() = " << v.front() << endl;
+	cout << "back() = " << v.back() << "\n\n";
+
+	// insert()
+	v.insert(v.begin() + 1, 15);
+	print_vector(v, "insert(1, 15) 후");
+
+	// erase()
+	v.erase(v.begin() + 2);
+	print_vector(v, "erase(2) 후");
+
+	// pop_back()
+	v.pop_back();
+	print_vector(v, "pop_back() 후");
+
+	// empty()
+	cout << "empty? " << (v.empty() ? "true" : "false") << "\n\n";
+
+	// clear()
+	v.clear();
+	print_vector(v, "clear() 후");
+
+	cout << " 멤버 함수 검증 끝 \n";
+}
+
+int main()
+{
+	test_vector_members();
+	return 0;
+}
